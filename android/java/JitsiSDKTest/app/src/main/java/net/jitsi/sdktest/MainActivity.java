@@ -51,8 +51,26 @@ public class MainActivity extends AppCompatActivity {
                 // When using JaaS, set the obtained JWT here
                 //.setToken("MyJWT")
                 // Different features flags can be set
-                // .setFeatureFlag("toolbox.enabled", false)
-                // .setFeatureFlag("filmstrip.enabled", false)
+                .setFeatureFlag("filmstrip.enabled", false)
+                .setFeatureFlag("add-people.enabled", false)
+                .setFeatureFlag("chat.enabled", false)
+                .setFeatureFlag("calendar.enabled", false)
+                .setFeatureFlag("security-options.enabled", false)
+                .setFeatureFlag("help.enabled", false)
+                .setFeatureFlag("close-captions.enabled", false)
+                .setFeatureFlag("invite.enabled", false)
+                .setFeatureFlag("live-streaming.enabled", false)
+                .setFeatureFlag("meeting-password.enabled", false)
+                .setFeatureFlag("notifications.enabled", false)
+                .setFeatureFlag("raise-hand.enabled", false)
+                .setFeatureFlag("recording.enabled",false)
+                .setFeatureFlag("tile-view.enabled", false)
+                .setFeatureFlag("video-share.enabled", false)
+                .setFeatureFlag("android.screensharing.enabled", false)
+                .setFeatureFlag("pip.enabled", false)
+                .setFeatureFlag("reactions.enabled", false)
+                .setFeatureFlag("lobby-mode.enabled", false)
+                .setFeatureFlag("android.audio-focus.disabled", true)
                 .setWelcomePageEnabled(false)
                 .build();
         JitsiMeet.setDefaultConferenceOptions(defaultOptions);
@@ -77,13 +95,12 @@ public class MainActivity extends AppCompatActivity {
             JitsiMeetConferenceOptions options
                     = new JitsiMeetConferenceOptions.Builder()
                     .setRoom(text)
-                    // Settings for audio and video
-                    //.setAudioMuted(true)
-                    //.setVideoMuted(true)
+                    .setFeatureFlag("pip.enabled", false)
+                    .setWelcomePageEnabled(false)
                     .build();
             // Launch the new activity with the given options. The launch() method takes care
             // of creating the required Intent and passing the options.
-            JitsiMeetActivity.launch(this, options);
+            CustomJitsiMeetActivity.launch(this, options);
         }
     }
 
@@ -116,6 +133,8 @@ public class MainActivity extends AppCompatActivity {
                 case PARTICIPANT_JOINED:
                     Timber.i("Participant joined%s", event.getData().get("name"));
                     break;
+                case ENDPOINT_TEXT_MESSAGE_RECEIVED:
+                    Timber.i("TEST ENDPOINT_TEXT_MESSAGE_RECEIVED");
             }
         }
     }
